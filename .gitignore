@@ -3,3 +3,5 @@ target/
 .idea
 .DS_Store
 *.iml
+/src/main/webapp/ckeditor/
+/src/main/webapp/jqgrid/
