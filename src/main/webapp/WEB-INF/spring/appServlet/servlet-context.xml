@@ -12,7 +12,9 @@
 
 	<annotation-driven/>
 
-	<!--<resources mapping="/resources/**" location="/resources/"/>-->
+	<resources mapping="/resources/**" location="/, classpath:/resources/"/>
+
+	<default-servlet-handler/>
 
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/"/>
@@ -20,4 +22,19 @@
 	</beans:bean>
 
 	<context:component-scan base-package="com.ferasinka.prospring4mvc"/>
+
+	<interceptors>
+		<beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<beans:property name="paramName" value="lang"/>
+		</beans:bean>
+	</interceptors>
+
+	<beans:bean class="org.springframework.context.support.ReloadableResourceBundleMessageSource" id="messageSource">
+		<beans:property name="basenames" value="WEB-INF/i18n/messages,WEB-INF/i18n/application"/>
+		<beans:property name="fallbackToSystemLocale" value="false"/>
+	</beans:bean>
+
+	<beans:bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver" id="localeResolver">
+		<beans:property name="cookieName" value="locale"/>
+	</beans:bean>
 </beans:beans>
