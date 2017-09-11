@@ -16,14 +16,24 @@
 
 	<default-servlet-handler/>
 
-	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<beans:property name="prefix" value="/WEB-INF/views/"/>
-		<beans:property name="suffix" value=".jspx"/>
+	<beans:bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" id="tilesViewResolver">
+		<beans:property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+	</beans:bean>
+
+	<beans:bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer" id="tilesConfigurer">
+		<beans:property name="definitions">
+			<beans:list>
+				<beans:value>/WEB-INF/layouts/layouts.xml</beans:value>
+				<beans:value>/WEB-INF/views/**/views.xml</beans:value>
+			</beans:list>
+		</beans:property>
 	</beans:bean>
 
 	<context:component-scan base-package="com.ferasinka.prospring4mvc"/>
 
 	<interceptors>
+		<beans:bean class="org.springframework.web.servlet.theme.ThemeChangeInterceptor"/>
+
 		<beans:bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
 			<beans:property name="paramName" value="lang"/>
 		</beans:bean>
@@ -36,5 +46,12 @@
 
 	<beans:bean class="org.springframework.web.servlet.i18n.CookieLocaleResolver" id="localeResolver">
 		<beans:property name="cookieName" value="locale"/>
+	</beans:bean>
+
+	<beans:bean class="org.springframework.ui.context.support.ResourceBundleThemeSource" id="themeSource"/>
+
+	<beans:bean class="org.springframework.web.servlet.theme.CookieThemeResolver" id="themeResolver">
+		<beans:property name="cookieName" value="theme"/>
+		<beans:property name="defaultThemeName" value="standard"/>
 	</beans:bean>
 </beans:beans>
