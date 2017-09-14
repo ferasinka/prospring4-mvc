@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
 
@@ -45,7 +46,7 @@ public class ContactController {
 	}
 	
 	@RequestMapping(value = "/{id}", params = "form", method = RequestMethod.POST)
-	public String update(Contact contact, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
+	public String update(@Valid Contact contact, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
 		LOG.info("Updating contact");
 		
 		if (bindingResult.hasErrors()) {
@@ -72,7 +73,7 @@ public class ContactController {
 	}
 	
 	@RequestMapping(params = "form", method = RequestMethod.POST)
-	public String create(Contact contact, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
+	public String create(@Valid Contact contact, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
 		LOG.info("Creating contact");
 		
 		if (bindingResult.hasErrors()) {
