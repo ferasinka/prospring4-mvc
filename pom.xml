@@ -126,6 +126,12 @@
 			<version>${spring-security.version}</version>
 		</dependency>
 
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-taglibs</artifactId>
+			<version>${spring-security.version}</version>
+		</dependency>
+
 		<!-- Spring OXM -->
 		<dependency>
 			<groupId>org.springframework</groupId>

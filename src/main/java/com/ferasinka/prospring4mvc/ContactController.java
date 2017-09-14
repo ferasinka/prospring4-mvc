@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -70,6 +71,16 @@ public class ContactController {
 		contactService.save(contact);
 		
 		return "redirect:/contacts/" + UrlUtil.encodeUrlPathSegment(contact.getId().toString(), httpServletRequest);
+	}
+	
+	@PreAuthorize("isAuthenticated()")
+	@RequestMapping(params = "form", method = RequestMethod.GET)
+	public String createForm(Model uiModel) {
+		Contact contact = new Contact();
+		
+		uiModel.addAttribute("contact", contact);
+		
+		return "contacts/create";
 	}
 	
 	@RequestMapping(value = "/{id}", params = "form", method = RequestMethod.GET)

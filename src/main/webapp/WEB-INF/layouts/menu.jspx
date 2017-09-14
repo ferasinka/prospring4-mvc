@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <div id="menu" xmlns:jsp="http://java.sun.com/JSP/Page"
 	 xmlns:spring="http://www.springframework.org/tags"
+	 xmlns:sec="http://www.springframework.org/security/tags"
 	 version="2.0">
 
 	<jsp:directive.page contentType="text/html; charset=UTF-8"/>
@@ -8,8 +9,38 @@
 
 	<spring:message code="menu_header_text" var="menuHeaderText"/>
 	<spring:message code="menu_add_contact" var="menuAddContact"/>
-	<spring:url value="/contacts?form" var="addContactUrl"/>
+	<spring:message code="label_login" var="labelLogin"/>
 
-	<h3>${menuHeaderText}</h3>
-	<h3><a href="${addContactUrl}">${menuAddContact}</a></h3>
+	<spring:url value="/contacts?form" var="addContactUrl"/>
+	<spring:url value="/j_spring_security_check" var="loginUrl"/>
+
+	<sec:authorize access="hasRole('ROLE_USER')">
+		<h3><a href="${addContactUrl}">${menuAddContact}</a></h3>
+	</sec:authorize>
+
+	<sec:authorize access="isAnonymous()">
+		<div id="login">
+			<form name="loginForm" action="${loginUrl}" method="post">
+				<table>
+					<caption align="left">Login:</caption>
+
+					<tr>
+						<td>Username:</td>
+						<td><input type="text" name="j_username"/></td>
+					</tr>
+
+					<tr>
+						<td>Password:</td>
+						<td><input type="password" name="j_password"/></td>
+					</tr>
+
+					<tr>
+						<td colspan="2" align="center">
+							<input name="submit" type="submit" value="Login"/>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</sec:authorize>
 </div>

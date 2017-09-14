@@ -30,15 +30,15 @@
 	<script src="${ckeditor_url}"><!----></script>
 	<script src="${ckeditor_jquery_url}"><!----></script>
 
-	<spring:url value="/resorces/jqgrid/css/ui.jqgrid.css" var="jqgrid_css"/>
-	<spring:url value="/resorces/jqgrid/js/i18n/grid.locale-en.js" var="jqgrid_locale_url"/>
+	<spring:url value="/resources/jqgrid/css/ui.jqgrid.css" var="jqgrid_css"/>
+	<spring:url value="/resources/jqgrid/js/i18n/grid.locale-en.js" var="jqgrid_locale_url"/>
 	<spring:url value="/resources/jqgrid/js/jquery.jqGrid.min.js" var="jqgrid_url"/>
 
 	<link rel="stylesheet" media="screen" href="${jqgrid_css}"/>
 
 	<script src="${jqgrid_locale_url}"><!----></script>
 	<script src="${jqgrid_url}"><!----></script>
-	
+
 	<c:set var="userLocale">
 		<c:set var="plocale">${pageContext.response.locale}</c:set>
 		<c:out value="${fn:replace(plocale, '_', '-')}" default="en"/>
