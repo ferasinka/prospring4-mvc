@@ -13,10 +13,12 @@
 	<spring:message code="label_contact_last_name" var="labelContactLastName"/>
 	<spring:message code="label_contact_birth_date" var="labelContactBirthDate"/>
 	<spring:message code="label_contact_description" var="labelContactDescription"/>
+	<spring:message code="label_contact_photo" var="labelContactPhoto"/>
 	<spring:message code="label_contact_update" var="labelContactUpdate"/>
 	<spring:message code="date_format_pattern" var="dateFormatPattern"/>
 
 	<spring:url value="/contacts" var="editContactUrl"/>
+	<spring:url value="/contacts/photo" var="contactPhotoUrl"/>
 
 	<h1>${labelContactInfo}</h1>
 
@@ -44,6 +46,11 @@
 			<tr>
 				<td>${labelContactDescription}</td>
 				<td>${contact.description}</td>
+			</tr>
+
+			<tr>
+				<td>${labelContactPhoto}</td>
+				<td><img src="${contactPhotoUrl}/${contact.id}"/></td>
 			</tr>
 
 			<a href="${editContactUrl}/${contact.id}?form">${labelContactUpdate}</a>

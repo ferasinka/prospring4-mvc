@@ -58,4 +58,7 @@
 		<beans:property name="cookieName" value="theme"/>
 		<beans:property name="defaultThemeName" value="standard"/>
 	</beans:bean>
+
+	<beans:bean class="org.springframework.web.multipart.support.StandardServletMultipartResolver"
+				id="multipartResolver"/>
 </beans:beans>

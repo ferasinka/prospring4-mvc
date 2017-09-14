@@ -1,6 +1,7 @@
 package com.ferasinka.prospring4mvc;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Part;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.Locale;
 
@@ -75,8 +79,8 @@ public class ContactController {
 		return "contacts/update";
 	}
 	
-	@RequestMapping(params = "form", method = RequestMethod.POST)
-	public String create(@Valid Contact contact, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale) {
+	@RequestMapping(method = RequestMethod.POST)
+	public String create(@Valid Contact contact, BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest, RedirectAttributes redirectAttributes, Locale locale, @RequestParam(value = "file", required = false) Part file) {
 		LOG.info("Creating contact");
 		
 		if (bindingResult.hasErrors()) {
@@ -91,6 +95,30 @@ public class ContactController {
 		redirectAttributes.addFlashAttribute("message", new Message("success", messageSource.getMessage("contact_save_success", new Object[]{}, locale)));
 		
 		LOG.info("Contact id: " + contact.getId());
+		
+		if (file != null) {
+			LOG.info("File name: " + file.getName());
+			LOG.info("File size: " + file.getSize());
+			LOG.info("File content type: " + file.getContentType());
+			
+			byte[] fileContent = null;
+			
+			try {
+				InputStream inputStream = file.getInputStream();
+				
+				if (inputStream == null) {
+					LOG.info("File input stream is null");
+				}
+				
+				fileContent = IOUtils.toByteArray(inputStream);
+				
+				contact.setPhoto(fileContent);
+			} catch (IOException e) {
+				LOG.error("Error saving uploaded file!");
+			}
+			
+			contact.setPhoto(fileContent);
+		}
 		
 		contactService.save(contact);
 		
@@ -139,6 +167,18 @@ public class ContactController {
 		contactGrid.setContactData(Lists.newArrayList(contactPage.iterator()));
 		
 		return contactGrid;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "/photo/{id}", method = RequestMethod.POST)
+	public byte[] downloadPhoto(@PathVariable("id") Long id) {
+		Contact contact = contactService.findById(id);
+		
+		if (contact.getPhoto() != null) {
+			LOG.info("Downliading photo for id: {} with size: {}", contact.getId(), contact.getPhoto().length);
+		}
+		
+		return contact.getPhoto();
 	}
 	
 	@Autowired

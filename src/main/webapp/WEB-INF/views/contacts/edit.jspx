@@ -37,7 +37,7 @@
 	<h1>${formTitle}</h1>
 
 	<div id="contactUpdate">
-		<form:form modelAttribute="contact" id="contactUpdateForm" method="post">
+		<form:form modelAttribute="contact" id="contactUpdateForm" method="post" enctype="multipart/form-data">
 			<c:if test="${not empty message}">
 				<div id="message" class="${message.type}">${message.message}</div>
 			</c:if>
@@ -75,6 +75,11 @@
 			<div>
 				<form:errors path="description" cssClass="error"/>
 			</div>
+
+			<p/>
+
+			<label for="file">${labelContactPhoto}</label>
+			<input name="file" type="file"/>
 
 			<p/>
 
