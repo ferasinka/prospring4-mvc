@@ -12,6 +12,7 @@
 		<spring-security.version>4.2.3.RELEASE</spring-security.version>
 		<hibernate.version>5.2.10.Final</hibernate.version>
 		<hibeenate-validator.version>5.4.1.Final</hibeenate-validator.version>
+		<javax.servlet-api.version>4.0.0</javax.servlet-api.version>
 		<javax.validation.version>1.1.0.Final</javax.validation.version>
 		<javax.el.version>3.0.1-b08</javax.el.version>
 		<jstl.version>1.2</jstl.version>
@@ -59,6 +60,14 @@
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
+		</dependency>
+
+		<!-- javax.servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>javax.servlet-api</artifactId>
+			<version>${javax.servlet-api.version}</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<!-- javax.validation -->

@@ -13,6 +13,8 @@
 	<spring:message code="label_contact_last_name" var="labelContactLastName"/>
 	<spring:message code="label_contact_birth_date" var="labelContactBirthDate"/>
 
+	<spring:url value="/contacts" var="showContactUrl"/>
+
 	<h1>${labelContactList}</h1>
 
 	<c:if test="${not empty contacts}">
@@ -28,7 +30,7 @@
 			<tbody>
 			<c:forEach items="${contacts}" var="contact">
 				<tr>
-					<td>${contact.firstName}</td>
+					<td><a href="${showContactUrl}/${contact.id}">${contact.firstName}</a></td>
 					<td>${contact.lastName}</td>
 					<td><joda:format value="${contact.birthDate}" pattern="yyyy-MM-dd"/></td>
 				</tr>
